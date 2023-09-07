@@ -1,10 +1,22 @@
+import db from "@/utils/db";
+import TodoList from "@/components/TodoList";
 
-const Todos = () => {
-    return (
-      <div>
-         Todos
-      </div>
-    )
-  }
-  
-  export default Todos
+const getData = async () => {
+  await new Promise<void>((resolve, reject) =>
+    setTimeout(() => resolve(), 2000)
+  );
+  const todos = await db.todo.findMany({});
+  // console.log(todos)
+  return todos;
+};
+
+const Todos = async () => {
+  const todos = await getData();
+  return (
+    <div>
+      <TodoList todos={todos} />
+    </div>
+  );
+};
+
+export default Todos;
